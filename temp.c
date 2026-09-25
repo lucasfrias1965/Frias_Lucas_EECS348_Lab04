@@ -25,9 +25,9 @@ static inline temp get_temp(char a){
 float convert_to_cel(float value_given, temp temp_given){
         switch (temp_given){
             case Farenheit:
-                return (value_given - 32)* 9/5;
+                return (value_given * 0.6) - 32;
             case Kelvin:
-                return (value_given) + 273.15;
+                return (value_given) - 273.15;
             case Celcius:
                 return (value_given);
         }
@@ -35,10 +35,10 @@ float convert_to_cel(float value_given, temp temp_given){
 }
 
 float convert_c_to_f(float value_given){
-        return 1.8 * value_given + 32;
+        return (1.8 * value_given) + 32;
 }
 float convert_c_to_k(float value_given){
-        return value_given - 273.15;
+        return value_given + 273.15;
 }
 
 int main(){
@@ -75,20 +75,23 @@ int main(){
     temp temp_out = get_temp(scale_final);
     float user_input_in_celcius = convert_to_cel(tempin, temp_in);
     float result;
-    printf("Converted Temperature: ");
     switch (temp_out){
-        case Celcius:
-            printf("%f", result);
-            break;
         case Farenheit:
-            printf("%f", convert_c_to_f(temp_in)); 
+            result = convert_c_to_f(user_input_in_celcius);
             break;
         case Kelvin:
-            printf("%f", convert_c_to_k(temp_in)); 
+            result =  convert_c_to_k(user_input_in_celcius);
+        case Celcius:
+            result = user_input_in_celcius;
     }
+    
+    printf("Converted Temperature: %.3f\n", result);
+    printf("Temperature Category: ");
+    if (user_input_in_celcius < 0) printf("Cold\nWeather Advisory: Wear a Jacket");
+    else if (user_input_in_celcius < 10) printf("Cold\nWeather Advisory: Decent weather, maybe wear a thingy");
+    else if (user_input_in_celcius < 25) printf("Comfortable\nWeather Advisory: Great weather");
+    else if (user_input_in_celcius < 35) printf("Hot\nWeather Advisory: Maybe wear super light clothing");
+    else printf("Extreme Heat\nWeather Advisory: it's the end of days :(");
     printf("\n");
-    
-    
-
     return 0;
 }
