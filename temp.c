@@ -73,6 +73,9 @@ int main(){
 
     temp temp_in = get_temp(scale_init);
     temp temp_out = get_temp(scale_final);
+    if (temp_in == Unknown || temp_out == Unknown){
+            printf("Error, unknown tempterature type\n");
+    }
     float user_input_in_celcius = convert_to_cel(tempin, temp_in);
     float result;
     switch (temp_out){
